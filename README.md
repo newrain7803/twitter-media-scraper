@@ -9,6 +9,6 @@
 
 获取到的媒体文件自动保存到路径下的download文件夹
 
-默认使用系统代理，无需配置，若有提取任何问题，请反馈log文件
+默认使用系统代理，无需配置，若提取出现任何问题，请反馈log文件
 
 <a href="https://sm.ms/image/wvPBc4mgVy9aCxo" target="_blank"><img src="https://i.loli.net/2020/08/13/wvPBc4mgVy9aCxo.png" ></a>
