@@ -3,9 +3,9 @@
 
 支持输入如下两种格式的链接：
 
-1. https://twitter.com/***/status/********
+1. https://<span></span>twitter.com/\*\*\*/status/\*\*\*\*\*\*
 
-2. https://t.co/******
+2. https://<span></span>t.co/******
 
 
 默认使用系统代理，无需配置，若有提取任何问题，请反馈log
