@@ -1,4 +1,4 @@
-# twitter-meida-scraper
+# twitter-media-scraper
 用于提取推特页面中包含的媒体数据（例如图片）的脚本
 
 支持输入如下两种格式的链接：
