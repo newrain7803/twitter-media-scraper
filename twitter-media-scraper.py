@@ -1,11 +1,10 @@
 import winreg, traceback, requests, re, os, time, json
-version = '1.0'
+version = '1.1'
 proxy = None
 headers = {}
-host_url = 'https://twitter.com'
+host_url = 'https://api.twitter.com/1.1/guest/activate.json'
 api_url = 'https://api.twitter.com/2/timeline/conversation/{}.json?include_entities=false&include_user_entities=false&tweet_mode=extended'
 authorization = "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA"
-p_guest_token = re.compile(r'gt=(\d+)')
 p_tw_link = re.compile(r'status/(\d+)')
 p_media_link = re.compile(r"(https://pbs.twimg.com/media/.+?)'")
 s = requests.Session()
@@ -22,9 +21,15 @@ def get_proxy():
 
 def set_header():
     global headers
-    web_content = s.get(host_url, proxies=proxy).text
-    x_guest_token = p_guest_token.findall(web_content)[0]
-    headers = {'authorization': authorization, 'x-guest-token': x_guest_token}
+    headers = {'authorization': authorization}
+    respone = s.post(host_url, proxies=proxy, headers=headers).json()
+    if 'guest_token' in respone:
+        x_guest_token = respone['guest_token']
+        headers = {'authorization': authorization, 'x-guest-token': x_guest_token}
+    else:
+        print("guest_token获取失败, 请前往issue页反馈:\nhttps://github.com/mengzonefire/twitter-media-scraper/issues")
+        input("\n按回车键退出程序\n")
+        exit()
 
 
 def get_media_link(page_id):
@@ -37,7 +42,7 @@ def get_media_link(page_id):
         if 'Sorry, that page does not exist' in page_content:
             print('提取失败: 该条推特已删除')
         else:
-            print('提取失败: 接口访问错误,请检查log')
+            print('提取失败: 接口访问错误, 请检查log文件, 并前往issue页反馈:\nhttps://github.com/mengzonefire/twitter-media-scraper/issues')
             write_log(page_id, page_content)
         return 'error'
 
